@@ -1,0 +1,17 @@
+{
+  "trigger": true,
+  "modules": [
+    "custom"
+  ],
+  "parentResource": "SignalClonePrep",
+  "functionName": "SignalClonePrepPostConfirmation",
+  "resourceName": "SignalClonePrepPostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": [],
+  "triggerDir": "/snapshot/node_modules/amplify-category-auth/provider-utils/awscloudformation/triggers/PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "triggerEventPath": "PostConfirmation.event.json",
+  "roleName": "SignalClonePrepPostConfirmation",
+  "skipEdit": true,
+  "enableCors": false
+}
