@@ -9,15 +9,31 @@ import {
   Platform 
 } from 'react-native';
 import { SimpleLineIcons, Feather, MaterialCommunityIcons, AntDesign, Ionicons } from '@expo/vector-icons'; 
+import { DataStore } from '@aws-amplify/datastore';
+import { ChatRoom, Message } from '../../src/models';
+import { Auth } from 'aws-amplify';
 
-const MessageInput = () => {
+const MessageInput = ({ chatRoom }) => {
   const [message, setMessage] = useState('');
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     // send message
-    console.warn("sending: ", message);
+    const user = await Auth.currentAuthenticatedUser();
+    const newMessage = await DataStore.save(new Message({
+      content: message,
+      userID: user.attributes.sub,
+      chatroomID: chatRoom.id,
+    }))
+
+    updateLastMessage(newMessage);
 
     setMessage('');
+  }
+
+  const updateLastMessage = async (newMessage) => {
+    DataStore.save(ChatRoom.copyOf(chatRoom, updatedChatRoom => {
+      updatedChatRoom.LastMessage = newMessage;
+    }))
   }
 
   const onPlusClicked = () => {
