@@ -25,6 +25,7 @@
     "expo-asset": "~8.3.2",
     "expo-constants": "~11.0.1",
     "expo-font": "~9.2.1",
+    "expo-image-picker": "~10.2.2",
     "expo-linking": "~2.3.1",
     "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
@@ -37,7 +38,8 @@
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

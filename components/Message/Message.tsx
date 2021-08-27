@@ -1,17 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { DataStore } from '@aws-amplify/datastore';
-import { User } from '../../src/models';
-import { Auth } from 'aws-amplify';
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { DataStore } from "@aws-amplify/datastore";
+import { User } from "../../src/models";
+import { Auth } from "aws-amplify";
+import { S3Image } from "aws-amplify-react-native";
+import { useWindowDimensions } from "react-native";
 
-const blue = '#3777f0';
-const grey = 'lightgrey';
-
-const myID = 'u1';
+const blue = "#3777f0";
+const grey = "lightgrey";
 
 const Message = ({ message }) => {
-  const [user, setUser] = useState<User|undefined>();
+  const [user, setUser] = useState<User | undefined>();
   const [isMe, setIsMe] = useState<boolean>(false);
+
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     DataStore.query(User, message.userID).then(setUser);
@@ -24,38 +26,56 @@ const Message = ({ message }) => {
       }
       const authUser = await Auth.currentAuthenticatedUser();
       setIsMe(user.id === authUser.attributes.sub);
-    }
+    };
     checkIfMe();
-  }, [user])
+  }, [user]);
 
   if (!user) {
-    return <ActivityIndicator />
+    return <ActivityIndicator />;
   }
 
   return (
-    <View style={[styles.container, isMe ? styles.rightContainer : styles.leftContainer]}>
-      <Text style={{ color: isMe ? 'black' : 'white'}}>{message.content}</Text>
+    <View
+      style={[
+        styles.container,
+        isMe ? styles.rightContainer : styles.leftContainer,
+      ]}
+    >
+      {message.image && (
+        <View style={{ marginBottom: message.content ? 10 : 0 }}>
+          <S3Image
+            imgKey={message.image}
+            style={{ width: width * 0.7, aspectRatio: 4 / 3 }}
+            resizeMode="contain"
+          />
+        </View>
+      )}
+      {!!message.content && (
+        <Text style={{ color: isMe ? "black" : "white" }}>
+          {message.content}
+        </Text>
+      )}
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     padding: 10,
     margin: 10,
     borderRadius: 10,
-    maxWidth: '75%',
+    maxWidth: "75%",
   },
   leftContainer: {
     backgroundColor: blue,
     marginLeft: 10,
-    marginRight: 'auto'
+    marginRight: "auto",
   },
   rightContainer: {
     backgroundColor: grey,
-    marginLeft: 'auto',
+    marginLeft: "auto",
     marginRight: 10,
-  }
+  },
 });
 
 export default Message;
