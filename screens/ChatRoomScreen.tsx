@@ -1,15 +1,22 @@
-import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, FlatList, SafeAreaView, ActivityIndicator} from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/core';
-import { DataStore } from '@aws-amplify/datastore';
-import { ChatRoom, Message as MessageModel } from '../src/models';
-import Message  from '../components/Message';
-import MessageInput from '../components/MessageInput';
-import { SortDirection } from 'aws-amplify';
+import React, { useState, useEffect } from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  SafeAreaView,
+  ActivityIndicator,
+} from "react-native";
+import { useRoute, useNavigation } from "@react-navigation/core";
+import { DataStore } from "@aws-amplify/datastore";
+import { ChatRoom, Message as MessageModel } from "../src/models";
+import Message from "../components/Message";
+import MessageInput from "../components/MessageInput";
+import { SortDirection } from "aws-amplify";
 
 export default function ChatRoomScreen() {
   const [messages, setMessages] = useState<MessageModel[]>([]);
-  const [chatRoom, setChatRoom] = useState<ChatRoom|null>(null);
+  const [chatRoom, setChatRoom] = useState<ChatRoom | null>(null);
 
   const route = useRoute();
   const navigation = useNavigation();
@@ -23,10 +30,10 @@ export default function ChatRoomScreen() {
   }, [chatRoom]);
 
   useEffect(() => {
-    const subscription = DataStore.observe(MessageModel).subscribe(msg => {
+    const subscription = DataStore.observe(MessageModel).subscribe((msg) => {
       console.log(msg.model, msg.opType, msg.element);
-      if (msg.model === MessageModel && msg.opType === 'INSERT') {
-        setMessages(existingMessage => [msg.element,...existingMessage])
+      if (msg.model === MessageModel && msg.opType === "INSERT") {
+        setMessages((existingMessage) => [msg.element, ...existingMessage]);
       }
     });
 
@@ -50,38 +57,36 @@ export default function ChatRoomScreen() {
     if (!chatRoom) {
       return;
     }
-    const fetchedMessages = await DataStore.query(MessageModel, 
-      message => message.chatroomID("eq", chatRoom?.id),
+    const fetchedMessages = await DataStore.query(
+      MessageModel,
+      (message) => message.chatroomID("eq", chatRoom?.id),
       {
-        sort: message => message.createdAt(SortDirection.DESCENDING)
+        sort: (message) => message.createdAt(SortDirection.DESCENDING),
       }
     );
     console.log(fetchedMessages);
     setMessages(fetchedMessages);
   };
 
-  navigation.setOptions({title: 'Elon Musk'})
-
   if (!chatRoom) {
-    return <ActivityIndicator />
+    return <ActivityIndicator />;
   }
 
   return (
     <SafeAreaView style={styles.page}>
       <FlatList
         data={messages}
-        renderItem={({ item}) => <Message message={item} />}
+        renderItem={({ item }) => <Message message={item} />}
         inverted
       />
       <MessageInput chatRoom={chatRoom} />
     </SafeAreaView>
-  )
-};
+  );
+}
 
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     flex: 1,
-  }
-})
-
+  },
+});
