@@ -39,7 +39,8 @@
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-web": "~0.13.12",
-    "uuid": "^3.4.0"
+    "uuid": "^3.4.0",
+    "expo-av": "~9.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
