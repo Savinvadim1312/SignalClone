@@ -45,6 +45,22 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "status": {
+                    "name": "status",
+                    "isArray": false,
+                    "type": {
+                        "enum": "MessageStatus"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "replyToMessageID": {
+                    "name": "replyToMessageID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -373,6 +389,13 @@ export const schema = {
                         "associatedWith": "user"
                     }
                 },
+                "lastOnlineAt": {
+                    "name": "lastOnlineAt",
+                    "isArray": false,
+                    "type": "AWSTimestamp",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -416,7 +439,16 @@ export const schema = {
             ]
         }
     },
-    "enums": {},
+    "enums": {
+        "MessageStatus": {
+            "name": "MessageStatus",
+            "values": [
+                "SENT",
+                "DELIVERED",
+                "READ"
+            ]
+        }
+    },
     "nonModels": {},
-    "version": "28990ccc6345c81dddb85a4ec445e0ac"
+    "version": "1f64398d44b204a6bc87812ba8da1538"
 };
