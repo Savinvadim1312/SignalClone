@@ -25,8 +25,9 @@ import { v4 as uuidv4 } from "uuid";
 import { Audio, AVPlaybackStatus } from "expo-av";
 import { stat } from "fs";
 import AudioPlayer from "../AudioPlayer";
+import MessageComponent from "../Message";
 
-const MessageInput = ({ chatRoom }) => {
+const MessageInput = ({ chatRoom, messageReplyTo, removeMessageReplyTo }) => {
   const [message, setMessage] = useState("");
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [image, setImage] = useState<string | null>(null);
@@ -60,6 +61,7 @@ const MessageInput = ({ chatRoom }) => {
         content: message,
         userID: user.attributes.sub,
         chatroomID: chatRoom.id,
+        replyToMessageID: messageReplyTo?.id,
       })
     );
 
@@ -98,6 +100,7 @@ const MessageInput = ({ chatRoom }) => {
     setImage(null);
     setProgress(0);
     setSoundURI(null);
+    removeMessageReplyTo();
   };
 
   // Image picker
@@ -146,6 +149,7 @@ const MessageInput = ({ chatRoom }) => {
         image: key,
         userID: user.attributes.sub,
         chatroomID: chatRoom.id,
+        replyToMessageID: messageReplyTo?.id,
       })
     );
 
@@ -217,7 +221,8 @@ const MessageInput = ({ chatRoom }) => {
         audio: key,
         userID: user.attributes.sub,
         chatroomID: chatRoom.id,
-        status: "SENT"
+        status: "SENT",
+        replyToMessageID: messageReplyTo?.id,
       })
     );
 
@@ -232,6 +237,31 @@ const MessageInput = ({ chatRoom }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={100}
     >
+      {messageReplyTo && (
+        <View
+          style={{
+            backgroundColor: "#f2f2f2",
+            padding: 5,
+            flexDirection: "row",
+            alignSelf: "stretch",
+            justifyContent: "space-between",
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <Text>Reply to:</Text>
+            <MessageComponent message={messageReplyTo} />
+          </View>
+          <Pressable onPress={() => removeMessageReplyTo()}>
+            <AntDesign
+              name="close"
+              size={24}
+              color="black"
+              style={{ margin: 5 }}
+            />
+          </Pressable>
+        </View>
+      )}
+
       {image && (
         <View style={styles.sendImageContainer}>
           <Image
