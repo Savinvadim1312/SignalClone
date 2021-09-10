@@ -7,6 +7,7 @@ import {
   Text,
   Pressable,
   SafeAreaView,
+  Alert,
 } from "react-native";
 import UserItem from "../components/UserItem";
 import NewGroupButton from "../components/NewGroupButton";
@@ -46,14 +47,17 @@ export default function UsersScreen() {
     // connect authenticated user with the chat room
     const authUser = await Auth.currentAuthenticatedUser();
     const dbUser = await DataStore.query(User, authUser.attributes.sub);
-
+    if (!dbUser) {
+      Alert.alert("There was an error creating the group");
+      return;
+    }
     // Create a chat room
     const newChatRoomData = {
       newMessages: 0,
-      admin: dbUser,
+      Admin: dbUser,
     };
     if (users.length > 1) {
-      newChatRoomData.name = "New group";
+      newChatRoomData.name = "New group 2";
       newChatRoomData.imageUri =
         "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/group.jpeg";
     }
