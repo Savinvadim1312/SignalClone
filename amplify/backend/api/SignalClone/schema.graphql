@@ -21,6 +21,9 @@ type ChatRoom @model @auth(rules: [{allow: public}]) {
   LastMessage: Message @connection
   Messages: [Message] @connection(keyName: "byChatRoom", fields: ["id"])
   ChatRoomUsers: [ChatRoomUser] @connection(keyName: "byChatRoom", fields: ["id"])
+  Admin: User @connection
+  name: String
+  imageUri: String
 }
 
 type User @model @auth(rules: [{allow: public}]) {
