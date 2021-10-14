@@ -43,7 +43,8 @@
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
     "jest-expo": "~41.0.0-beta.0",
-    "typescript": "~4.0.0"
+    "typescript": "~4.0.0",
+    "@expo/metro-config": "^0.1.82"
   },
   "private": true
 }

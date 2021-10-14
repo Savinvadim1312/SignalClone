@@ -1,7 +1,7 @@
 const aws = require("aws-sdk");
 const ddb = new aws.DynamoDB();
 
-exports.handler = async (event, context) => {
+exports.handler = async (event) => {
   if (!event.request.userAttributes.sub) {
     console.log("Error: No user was written to DynamoDB");
     context.done(null, event);
@@ -34,6 +34,4 @@ exports.handler = async (event, context) => {
   } catch (e) {
     console.log("Error", e);
   }
-
-  context.done(null, event);
 };

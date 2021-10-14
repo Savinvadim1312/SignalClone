@@ -16,7 +16,10 @@
         "SignalClonePrep": {}
       },
       "function": {
-        "SignalClonePrepPostConfirmation": {}
+        "SignalClonePrepPostConfirmation": {
+          "deploymentBucketName": "amplify-signalcloneprep-staging-100650-deployment",
+          "s3Key": "amplify-builds/SignalClonePrepPostConfirmation-6c744261706f2b764e43-build.zip"
+        }
       }
     }
   }

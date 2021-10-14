@@ -15,6 +15,7 @@ Amplify.configure(config);
 function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+  // Auth.signOut();
 
   if (!isLoadingComplete) {
     return null;
