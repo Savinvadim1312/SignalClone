@@ -14,12 +14,14 @@
   "dependencies": {
     "@expo/react-native-action-sheet": "^3.11.0",
     "@expo/vector-icons": "^12.0.0",
-    "@react-native-async-storage/async-storage": "^1.15.6",
+    "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/netinfo": "^6.0.0",
     "@react-navigation/bottom-tabs": "5.11.2",
     "@react-navigation/native": "~5.8.10",
     "@react-navigation/stack": "~5.12.8",
+    "@stablelib/base64": "^1.0.1",
+    "@stablelib/utf8": "^1.0.1",
     "aws-amplify": "^4.2.4",
     "aws-amplify-react-native": "^5.0.3",
     "expo": "~42.0.1",
@@ -29,6 +31,7 @@
     "expo-font": "~9.2.1",
     "expo-image-picker": "~10.2.2",
     "expo-linking": "~2.3.1",
+    "expo-random": "~11.2.0",
     "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
     "expo-web-browser": "~9.2.0",
@@ -42,6 +45,7 @@
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-web": "~0.13.12",
+    "tweetnacl": "^0.14.5",
     "uuid": "^3.4.0"
   },
   "devDependencies": {

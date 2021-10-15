@@ -13,7 +13,21 @@ import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import moment from "moment";
 
+import { box } from "tweetnacl";
+import { generateKeyPair, encrypt, decrypt } from "./utils/crypto";
+
 Amplify.configure(config);
+
+const obj = { hello: "world" };
+const pairA = generateKeyPair();
+const pairB = generateKeyPair();
+
+const sharedA = box.before(pairB.publicKey, pairA.secretKey);
+const encrypted = encrypt(sharedA, obj);
+
+const sharedB = box.before(pairA.publicKey, pairB.secretKey);
+const decrypted = decrypt(sharedB, encrypted);
+console.log(obj, encrypted, decrypted);
 
 function App() {
   const isLoadingComplete = useCachedResources();
@@ -94,7 +108,7 @@ function App() {
     return (
       <SafeAreaProvider>
         <ActionSheetProvider>
-          <Navigation colorScheme={colorScheme} />
+          <Navigation colorScheme={"light"} />
         </ActionSheetProvider>
         <StatusBar />
       </SafeAreaProvider>

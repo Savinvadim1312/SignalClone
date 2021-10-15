@@ -13,6 +13,7 @@ type Message @model @auth(rules: [{allow: public}]) @key(name: "byUser", fields:
   audio: String
   status: MessageStatus
   replyToMessageID: ID
+  ForUser: User @connection
 }
 
 type ChatRoom @model @auth(rules: [{allow: public}]) {
@@ -34,6 +35,7 @@ type User @model @auth(rules: [{allow: public}]) {
   Messages: [Message] @connection(keyName: "byUser", fields: ["id"])
   chatrooms: [ChatRoomUser] @connection(keyName: "byUser", fields: ["id"])
   lastOnlineAt: AWSTimestamp
+  publicKey: String
 }
 
 type ChatRoomUser @model(queries: null) @key(name: "byChatRoom", fields: ["chatroomID", "userID"]) @key(name: "byUser", fields: ["userID", "chatroomID"]) @auth(rules: [{allow: public}, {allow: public}]) {
